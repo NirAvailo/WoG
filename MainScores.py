@@ -1,5 +1,6 @@
 from flask import Flask
-from Utils import ERROR_MESSAGE, SCORES_FILE_NAME
+
+from Utils import ERROR_MESSAGE, SCORES_FILE_NAME, HOST_IP, HOST_PORT
 
 app = Flask(__name__)
 
@@ -21,7 +22,6 @@ def get_score():
 
 @app.route('/')
 def score_server():
-    # get the score and show it on http://localhost:8080/
     score = get_score()
     if score < 1:
         return """
@@ -47,4 +47,4 @@ def score_server():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', debug=True, threaded=True, port=8080)
+    app.run(host=HOST_IP, debug=True, threaded=True, port=HOST_PORT)
