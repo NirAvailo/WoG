@@ -1,14 +1,9 @@
 pipeline {
-  agent {
-    node {
-      label 'any'
-      customWorkspace 'C:\\Users\\Nir\\PycharmProjects\\WoG'
-    }
-  }
+  agent any
   stages {
     stage('checkout') {
         steps {
-            echo 'https://github.com/NirAvailo/WoG.git'
+            git 'https://github.com/NirAvailo/WoG.git'
         }
     }
     stage('build') {
@@ -27,12 +22,13 @@ pipeline {
     stage('test') {
         steps {
             bat 'pip install flask'
-            bat 'python e2e.py'
+            bat 'pip install selenium'
+            bat 'python tests/e2e.py'
         }
     }
     stage('terminate') {
         steps {
-            bat 'docker container stop wog_app'
+            bat 'docker container stop wog_app | exit 0'
             bat 'docker container rm -f wog_app'
         }
     }
