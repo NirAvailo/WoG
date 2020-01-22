@@ -23,13 +23,13 @@ pipeline {
         steps {
             bat 'pip install flask'
             bat 'pip install selenium'
-            bat 'python tests/e2e.py'
+            bat 'python -m tests.e2e'
         }
     }
     stage('terminate') {
         steps {
             bat 'docker container stop wog_app | exit 0'
-            bat 'docker container rm -f wog_app'
+            bat 'docker container rm -f wog_app | exit 0'
         }
     }
   }
